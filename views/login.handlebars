@@ -1,0 +1,92 @@
+<head>
+  <style>
+    body {
+      background-color: #f8f9fa;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+    }
+    .login-container {
+      max-width: 400px;
+      margin: 0 auto;
+    }
+    .card {
+      border-radius: 10px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+    .btn-primary {
+      background-color: #4a6bff;
+      border-color: #4a6bff;
+    }
+    .btn-primary:hover {
+      background-color: #2541b8;
+      border-color: #2541b8;
+    }
+    .logo {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #4a6bff;
+      text-decoration: none;
+    }
+  </style>
+</head>
+  
+<div class="container login-container">
+<div class="text-center mb-4">
+    <a href="/" class="logo">AssetFlow</a>
+</div>
+<div class="card">
+    <div class="card-body p-4 p-md-5">
+    <h2 class="text-center mb-4">Login to Your Account</h2>
+    <form id="loginForm">
+        <div class="mb-3">
+        <label for="email" class="form-label">Email address</label>
+        <input type="email" class="form-control" id="email" required>
+        </div>
+        <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input type="password" class="form-control" id="password" required>
+        </div>
+        <div class="mb-3 form-check">
+        </div>
+        <div class="d-grid">
+        <button type="submit" class="btn btn-primary btn-lg">Login</button>
+        </div>
+    </form>
+    </div>
+</div>
+<div class="text-center mt-4">
+    <p>Don't have an account? <a href="/register" class="text-decoration-none">Sign up</a></p>
+    <p><a href="/" class="text-decoration-none">Back to home</a></p>
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+<script>
+const loginForm = document.getElementById("loginForm")
+
+loginForm.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const email = loginForm.email.value
+    const password = loginForm.password.value
+
+    console.log([ email, password ])
+
+    try {
+      const res = await axios.post('/login', { email, password });
+
+      if (res.data.success) {
+        window.alert("Login realizado com sucesso!")
+        window.location.href = '/workspaces'
+      } else {
+        window.alert("Usuario ou senha inválidos!")
+      }
+    } catch (err) {
+        window.alert("Erro ao Logar!")
+        console.error("Erro ao logar", err)
+    }
+  });
+</script>

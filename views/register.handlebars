@@ -1,0 +1,117 @@
+<head>
+    <style>
+    body {
+        background-color: #f8f9fa;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        padding: 40px 0;
+    }
+    .register-container {
+        max-width: 500px;
+        margin: 0 auto;
+    }
+    .card {
+        border-radius: 10px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+    .btn-primary {
+        background-color: #4a6bff;
+        border-color: #4a6bff;
+    }
+    .btn-primary:hover {
+        background-color: #2541b8;
+        border-color: #2541b8;
+    }
+    .logo {
+        font-size: 2rem;
+        font-weight: bold;
+        color: #4a6bff;
+        text-decoration: none;
+    }
+    </style>
+</head>
+
+<div class="container register-container">
+<div class="text-center mb-4">
+    <a href="/" class="logo">AssetFlow</a>
+</div>
+<div class="card">
+    <div class="card-body p-4 p-md-5">
+    <h2 class="text-center mb-4">Create Your Account</h2>
+    <form id="registerForm">
+        <div class="row">
+        <div class="col-md-6 mb-3">
+            <label for="firstName" class="form-label">First Name</label>
+            <input type="text" class="form-control" id="firstName" required>
+        </div>
+        <div class="col-md-6 mb-3">
+            <label for="lastName" class="form-label">Last Name</label>
+            <input type="text" class="form-control" id="lastName" required>
+        </div>
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">Email address</label>
+            <input type="email" class="form-control" id="email" required>
+        </div>
+        <div class="mb-3">
+            <label for="company" class="form-label">Company Name (Optional)</label>
+            <input type="text" class="form-control" id="company">
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" class="form-control" id="password" required>
+        <div class="form-text">Password must be at least 8 characters long.</div>
+        </div>
+        <div class="mb-3">
+            <label for="confirmPassword" class="form-label">Confirm Password</label>
+            <input type="password" class="form-control" id="confirmPassword" required>
+        </div>
+        
+        <div class="d-grid">
+        <button type="submit" class="btn btn-primary btn-lg">Create Account</button>
+        </div>
+
+          <div id="registerMessage"></div>
+    </form>
+    </div>
+</div>
+<div class="text-center mt-4">
+    <p>Already have an account? <a href="/login" class="text-decoration-none">Login</a></p>
+    <p><a href="/" class="text-decoration-none">Back to home</a></p>
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+  const registerForm = document.getElementById('registerForm');
+  const messageDiv = document.getElementById('registerMessage');
+
+  registerForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const firstName = registerForm.firstName.value;
+    const lastName = registerForm.lastName.value;
+    const companyName = registerForm.company.value;
+    const email = registerForm.email.value;
+    const password = registerForm.password.value;
+
+    try {
+      const res = await axios.post('/register', { firstName, lastName, companyName, email, password });
+
+      if (res.data.success) {
+        messageDiv.innerText = 'Registrado com sucesso!';
+        messageDiv.style.color = 'green';
+        // redireciona se quiser
+        setTimeout(() => window.location.href = '/workspaces', 1500);
+      } else {
+        messageDiv.innerText = res.data.message || 'Erro ao registrar.';
+        messageDiv.style.color = 'red';
+      }
+    } catch (err) {
+      messageDiv.innerText = err.response?.data?.message || 'Erro ao registrar.';
+      messageDiv.style.color = 'red';
+    }
+  });
+</script>

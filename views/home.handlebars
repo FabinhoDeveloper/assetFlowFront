@@ -1,0 +1,189 @@
+<head>
+    <style>
+    .hero-section {
+      background: linear-gradient(135deg, #4a6bff 0%, #2541b8 100%);
+      color: white;
+      padding: 100px 0;
+    }
+    .feature-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: #4a6bff;
+    }
+    .navbar-brand {
+      font-weight: bold;
+      font-size: 1.5rem;
+    }
+    .btn-primary {
+      background-color: #4a6bff;
+      border-color: #4a6bff;
+    }
+    .btn-primary:hover {
+      background-color: #2541b8;
+      border-color: #2541b8;
+    }
+    .btn-outline-light:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+  </style>
+</head>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+    <div class="container">
+        <a class="navbar-brand" href="/login">AssetFlow</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+            <a class="nav-link" href="#features">Features</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="#how-it-works">How It Works</a>
+            </li>
+            <li class="nav-item">
+            <a class="btn btn-primary ms-2" href="/login">Login</a>
+            </li>
+            <li class="nav-item">
+            <a class="btn btn-outline-primary ms-2" href="/register">Sign Up</a>
+            </li>
+        </ul>
+        </div>
+    </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+    <div class="container text-center">
+        <h1 class="display-4 fw-bold mb-4">Manage Your Assets with Ease</h1>
+        <p class="lead mb-5">AssetFlow helps you organize, track, and manage all your assets in customizable workspaces.</p>
+        <a href="/login" class="btn btn-light btn-lg px-5 py-3 fw-bold">Get Started for Free</a>
+    </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-5" id="features">
+    <div class="container">
+        <h2 class="text-center mb-5">Key Features</h2>
+        <div class="row g-4">
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+            <div class="card-body text-center p-4">
+                <div class="feature-icon">
+                <i class="bi bi-grid-3x3-gap"></i>
+                <!-- Bootstrap icons would be loaded in production -->
+                🏢
+                </div>
+                <h3>Workspaces</h3>
+                <p>Create custom workspaces for different departments or projects to keep everything organized.</p>
+            </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+            <div class="card-body text-center p-4">
+                <div class="feature-icon">
+                <i class="bi bi-clipboard-data"></i>
+                <!-- Bootstrap icons would be loaded in production -->
+                📊
+                </div>
+                <h3>Asset Tracking</h3>
+                <p>Keep track of all your assets with detailed information and custom fields.</p>
+            </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+            <div class="card-body text-center p-4">
+                <div class="feature-icon">
+                <i class="bi bi-people"></i>
+                <!-- Bootstrap icons would be loaded in production -->
+                👥
+                </div>
+                <h3>Team Collaboration</h3>
+                <p>Collaborate with your team members by sharing workspaces and asset information.</p>
+            </div>
+            </div>
+        </div>
+        </div>
+    </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="py-5 bg-light" id="how-it-works">
+    <div class="container">
+        <h2 class="text-center mb-5">How It Works</h2>
+        <div class="row align-items-center">
+        <div class="col-md-6 order-md-2">
+            <img src="https://via.placeholder.com/600x400" alt="AssetFlow Dashboard" class="img-fluid rounded shadow">
+        </div>
+        <div class="col-md-6 order-md-1">
+            <div class="p-4">
+            <h3 class="mb-3">Simple 3-Step Process</h3>
+            <div class="d-flex mb-4">
+                <div class="me-3 fs-4 fw-bold text-primary">1.</div>
+                <div>
+                <h5>Create Workspaces</h5>
+                <p>Set up workspaces for different departments or projects.</p>
+                </div>
+            </div>
+            <div class="d-flex mb-4">
+                <div class="me-3 fs-4 fw-bold text-primary">2.</div>
+                <div>
+                <h5>Add Assets</h5>
+                <p>Add your assets with detailed information to each workspace.</p>
+                </div>
+            </div>
+            <div class="d-flex">
+                <div class="me-3 fs-4 fw-bold text-primary">3.</div>
+                <div>
+                <h5>Manage & Track</h5>
+                <p>Easily manage, update, and track all your assets in one place.</p>
+                </div>
+            </div>
+            </div>
+        </div>
+        </div>
+    </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-5 bg-primary text-white text-center">
+    <div class="container">
+        <h2 class="mb-4">Ready to streamline your asset management?</h2>
+        <p class="lead mb-4">Join thousands of organizations that use AssetFlow to manage their assets efficiently.</p>
+        <a href="/login" class="btn btn-light btn-lg px-5">Sign Up Now</a>
+    </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-4 bg-dark text-white">
+    <div class="container">
+        <div class="row">
+        <div class="col-md-6">
+            <h5>AssetFlow</h5>
+            <p>The simplest way to manage your assets.</p>
+        </div>
+        <div class="col-md-3">
+            <h5>Links</h5>
+            <ul class="list-unstyled">
+            <li><a href="#" class="text-white">Features</a></li>
+            <li><a href="#" class="text-white">Pricing</a></li>
+            <li><a href="#" class="text-white">Documentation</a></li>
+            </ul>
+        </div>
+        <div class="col-md-3">
+            <h5>Contact</h5>
+            <ul class="list-unstyled">
+            <li><a href="#" class="text-white">Support</a></li>
+            <li><a href="#" class="text-white">Sales</a></li>
+            </ul>
+        </div>
+        </div>
+        <hr class="my-4">
+        <div class="text-center">
+        <p>&copy; 2023 AssetFlow. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
