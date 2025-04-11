@@ -82,6 +82,43 @@ router.post("/workspaces", async (req, res) => {
     }
 })
 
+router.delete("/workspace/:id", async (req, res) => {
+    const {id} = req.params
+    
+    const response = await axios.delete(`http://localhost:5000/workspace/delete/${id}`)
+
+    console.log(response.data)
+
+    if (response.data.success) {
+        return res.json({ success: true })
+    } else {
+        return res.json({ success: false })
+    }
+})
+
+router.put("/workspace/:id", async (req, res) => {
+    const { id } = req.params;
+    const { workspaceName, description, color } = req.body;
+  
+    try {
+      const response = await axios.put(`http://localhost:5000/workspace/edit/${id}`, {
+        workspaceName,
+        description,
+        color
+      });
+  
+      if (!response.data.error) {
+        return res.json({ success: true });
+      } else {
+        return res.json({ success: false });
+      }
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ success: false, message: "Erro ao atualizar workspace." });
+    }
+  });
+  
+
 // Profile
 
 router.get('/profile/', async (req, res) => {
