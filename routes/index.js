@@ -16,17 +16,13 @@ router.post("/login", async (req, res) => {
 
     const response = await axios.post("http://localhost:5000/user/auth", { email, password })
 
-    try {
-        if (response.data.user) {
-            req.session.userId = response.data.user.id
-            req.session.firstName = response.data.user.firstName
-            return res.json({ success: true })
-        }
-    } catch (error) {
+    if (response.data.success) {
+        req.session.userId = response.data.user.id
+        req.session.firstName = response.data.user.firstName
+        return res.json({ success: true })
+    } else {
         return res.json({ success: false })
     }
-    
-    
 })
 
 router.get("/logout", (req, res) => {
@@ -47,9 +43,9 @@ router.get('/register', (req, res) => {
 });
 
 router.post("/register", async (req, res) => {
-    const { firstName, lastName, company, email, password } = req.body
+    const { firstName, lastName, email, password } = req.body
 
-    const response = await axios.post("http://localhost:5000/user/addUser", {firstName, lastName, company, email, password})
+    const response = await axios.post("http://localhost:5000/user/addUser", {firstName, lastName, email, password})
 
     if (response.data.user) {
         req.session.userId = response.data.user.id
@@ -87,8 +83,6 @@ router.delete("/workspace/:id", async (req, res) => {
     
     const response = await axios.delete(`http://localhost:5000/workspace/delete/${id}`)
 
-    console.log(response.data)
-
     if (response.data.success) {
         return res.json({ success: true })
     } else {
@@ -123,7 +117,6 @@ router.put("/workspace/:id", async (req, res) => {
 
 router.get('/profile/', async (req, res) => {
     const id = req.session.userId
-    console.log(id)
 
     const response = await axios.get(`http://localhost:5000/user/getById/${id}`)
     
@@ -145,6 +138,8 @@ router.get('/items/:id', async (req, res) => {
     const {id} = req.params
 
     const response = await axios.get(`http://localhost:5000/item/getByWorkspace/${id}`)
+
+    console.log(response.data)
 
     res.render('workspace-items', { title: 'Items', firstName: req.session.firstName, userId: req.session.userId, items: response.data.items});
 });
