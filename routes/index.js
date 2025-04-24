@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const axios = require("axios")
+const autenticado = require("../middlewares/authMiddleware.js")
 
 router.get('/', (req, res) => {
     res.render('home', { title: 'Página Inicial'});
@@ -123,25 +124,42 @@ router.get('/profile/', async (req, res) => {
     res.render('profile', { title: 'Profile', firstName: req.session.firstName, userId: req.session.userId, user: response.data.user});
 });
 
-router.post('/profile/', async (req, res) => {
-    const id = req.session.userId
-
-    const response = await axios.get(`http://localhost:5000/user/editUser/${id}`, {})
+router.post('/profile', async (req, res) => {
+    try {
+        const id = req.session.userId;
+        const { firstName, lastName, email } = req.body;
     
-    console.log(response.data.user)
+        // Chamada para sua API que faz a atualização no banco de dados
+        const response = await axios.put(`http://localhost:5000/user/editUser/${id}`, {
+            firstName,
+            lastName,
+            email
+        });
 
-    res.render('profile', { title: 'Profile', firstName: req.session.firstName, userId: req.session.userId, user: response.data.user});
+        if (response.data.success) {
+            // Atualiza os dados na sessão
+            req.session.firstName = firstName;
+            req.session.lastName = lastName;
+            req.session.email = email;
+            
+            res.json({ success: true, message: 'Perfil atualizado com sucesso!' });
+        } else {
+            res.json({ success: false, message: response.data.message || 'Erro ao atualizar perfil' });
+        }
+    } catch (error) {
+        console.error('Erro ao editar perfil:', error);
+        res.json({ success: false, message: 'Erro interno ao atualizar perfil' });
+    }
 });
 
 // Items 
 router.get('/items/:id', async (req, res) => {
     const {id} = req.params
 
-    const response = await axios.get(`http://localhost:5000/item/getByWorkspace/${id}`)
+    const responseItems = await axios.get(`http://localhost:5000/item/getByWorkspace/${id}`)
+    const responseWorkspaceData = await axios.get(`http://localhost:5000/workspace/getById/${id}`)
 
-    console.log(response.data)
-
-    res.render('workspace-items', { title: 'Items', firstName: req.session.firstName, userId: req.session.userId, items: response.data.items});
+    res.render('workspace-items', { title: 'Items', firstName: req.session.firstName, userId: req.session.userId, items: responseItems.data, workspace: responseWorkspaceData.data.workspace});
 });
 
 router.post("/items/", async (req, res) => {

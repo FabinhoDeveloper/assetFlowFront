@@ -1,5 +1,5 @@
 function autenticado(req, res, next) {
-    if (req.session.usuario) {
+    if (req.session.user) {
       next();
     } else {
       res.redirect('/login');
