@@ -174,4 +174,29 @@ router.post("/items/", async (req, res) => {
     }
 })
 
+router.put("/item/:id", async (req, res) => {
+    const { itemName, category, serialNumber, value, assignedTo, location, description, purchaseDate } = req.body;
+    const {id} = req.params
+
+    const response = await axios.put(`http://localhost:5000/item/editItem/${id}`, {itemName, category, serialNumber, value, assignedTo, location, description, purchaseDate })
+
+    if (response.data.success) {
+        return res.json({ success: true })
+    } else {
+        return res.json({ success: false })
+    }
+})
+
+router.delete("/item/:id", async(req, res) => {
+    const {id} = req.params
+
+    const response = await axios.delete(`http://localhost:5000/item/deleteItem/${id}`)
+
+    if (response.data.success) {
+        return res.json({ success: true })
+    } else {
+        return res.json({ success: false })
+    }
+})
+
 module.exports = router;

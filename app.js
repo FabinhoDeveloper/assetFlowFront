@@ -5,7 +5,19 @@ const app = express();
 const port = 3000;
 
 // Configuração do Handlebars
-app.engine('handlebars', exphbs.engine({ defaultLayout: 'main' }));
+app.engine('handlebars', exphbs.engine({ 
+  defaultLayout: 'main', 
+  helpers: {
+    formatDate: function(isoDateString) {
+      if (!isoDateString) return '-';
+      const date = new Date(isoDateString);
+      const day = String(date.getDate() + 1).padStart(2, '0');
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const year = date.getFullYear();
+      return `${day}/${month}/${year}`;
+    }
+  }
+}));
 app.set('view engine', 'handlebars');
 app.set('views', path.join(__dirname, 'views'));
 
