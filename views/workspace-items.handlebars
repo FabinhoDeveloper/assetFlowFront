@@ -385,10 +385,6 @@
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 <script>
-
-const hoje = new Date().toISOString().split('T')[0];
-document.getElementsByClassName('date').setAttribute('max', hoje);
-
   // Esconder Sidebar
 document.getElementById('sidebarToggle').addEventListener('click', function() {
     document.getElementById('sidebar').classList.toggle('active');
@@ -475,9 +471,6 @@ document.getElementById("updateItemBtn").addEventListener('click', async (e) => 
         purchaseDate: document.getElementById('editItemPurchaseDate').value
     };
     
-
-    console.log(itemData.purchaseDate)
-
     try {
         const res = await axios.put(`/item/${itemId}`, itemData);
         if (res.data.success) {
