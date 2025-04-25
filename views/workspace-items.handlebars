@@ -128,7 +128,7 @@
     </li>
     <li>
     <a href="/profile">
-        <i class="bi bi-person"></i> Profile
+        <i class="bi bi-person"></i> Perfil
     </a>
     </li>
     <li>
@@ -391,17 +391,6 @@ document.getElementById('sidebarToggle').addEventListener('click', function() {
     document.getElementById('content').classList.toggle('active');
 });
 
-
-// Add item
-document.getElementById('addItemBtn').addEventListener('click', function() {
-    const name = document.getElementById('itemName').value;
-    if (name) {
-        window.location.reload();
-    } else {
-    alert('Please enter an item name');
-    }
-});
-
 // Update item
 document.getElementById('updateItemBtn').addEventListener('click', function() {
     // In a real application, you would send this data to your server
@@ -410,38 +399,46 @@ document.getElementById('updateItemBtn').addEventListener('click', function() {
     editModal.hide();
 });
 
-const itemForm = document.getElementById('addItemForm');
-
-itemForm.addEventListener('submit', async (e) => {
+// Add Item
+document.getElementById("addItemBtn").addEventListener('click', async (e) => {
     e.preventDefault();
 
+    // Obter o ID do workspace da URL (assumindo formato /workspaces/:id)
+    const pathParts = window.location.pathname.split('/');
+    const workspaceId = pathParts[2]; // Obtém o ID da URL
+
     const itemData = {
-      itemName: itemForm.itemName.value,
-      category: itemForm.category.value,
-      serialNumber: itemForm.serialNumber.value,
-      value: itemForm.value.value,
-      assignedTo: itemForm.assignedTo.value,
-      location: itemForm.location.value,
-      description: itemForm.description.value,
-      purchaseDate: itemForm.purchaseDate.value,
-      workspaceId: itemForm.workspaceId.value
+        itemName: document.getElementById('itemName').value,
+        category: document.getElementById('category').value,
+        serialNumber: document.getElementById('serialNumber').value,
+        value: document.getElementById('value').value,
+        assignedTo: document.getElementById('assignedTo').value,
+        location: document.getElementById('location').value,
+        description: document.getElementById('description').value,
+        purchaseDate: document.getElementById('purchaseDate').value,
+        workspaceId: workspaceId
     };
 
-    try {
-      const res = await axios.post('/items', itemData);
-
-      if (res.data.success) {
-        window.alert("Item cadastrado com sucesso!")
-        window.location.href = '/workspaces'
-      } else {
-        window.alert("Erro ao cadastrar item!")
-      }
-    } catch (err) {
-        window.alert("Erro ao cadastrar item!");
+    // Validação básica
+    if (!itemData.itemName || !itemData.category) {
+        alert('Por favor, preencha pelo menos o nome e a categoria do item');
+        return;
     }
-  });
 
-  // Adicione este código ao seu script existente
+    try {
+        const res = await axios.post('/items', itemData);
+        
+        if (res.data.success) {
+            alert("Item cadastrado com sucesso!");
+            window.location.reload(); // Recarrega a página para mostrar o novo item
+        } else {
+            alert("Erro ao cadastrar item: " + (res.data.message || ''));
+        }
+    } catch (err) {
+        console.error('Erro na requisição:', err);
+        alert("Erro ao cadastrar item! Detalhes no console.");
+    }
+});
 
 // Quando o modal de edição é aberto, preenche com os dados do item
 document.querySelectorAll('[data-bs-target="#editItemModal"]').forEach(button => {

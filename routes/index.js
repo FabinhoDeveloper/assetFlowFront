@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const axios = require("axios")
-const autenticado = require("../middlewares/authMiddleware.js")
+const {autenticado} = require("../middlewares/authMiddleware.js")
 
 router.get('/', (req, res) => {
     res.render('home', { title: 'Página Inicial'});
@@ -58,7 +58,7 @@ router.post("/register", async (req, res) => {
 })
 
 // Workspace 
-router.get('/workspaces/', async (req, res) => {
+router.get('/workspaces/', autenticado, async (req, res) => {
     const userId = req.session.userId
 
     const response = await axios.get(`http://localhost:5000/workspace/getByUser/${userId}`)
@@ -116,7 +116,7 @@ router.put("/workspace/:id", async (req, res) => {
 
 // Profile
 
-router.get('/profile/', async (req, res) => {
+router.get('/profile/', autenticado, async (req, res) => {
     const id = req.session.userId
 
     const response = await axios.get(`http://localhost:5000/user/getById/${id}`)
@@ -153,7 +153,7 @@ router.post('/profile', async (req, res) => {
 });
 
 // Items 
-router.get('/items/:id', async (req, res) => {
+router.get('/items/:id', autenticado, async (req, res) => {
     const {id} = req.params
 
     const responseItems = await axios.get(`http://localhost:5000/item/getByWorkspace/${id}`)
@@ -163,12 +163,11 @@ router.get('/items/:id', async (req, res) => {
 });
 
 router.post("/items/", async (req, res) => {
-    const { itemName, category, serialNumber, value, assignedTo, location, description, purchaseDate } = req.body;
-    const {workspaceId} = req.session
+    const { itemName, category, serialNumber, value, assignedTo, location, description, purchaseDate, workspaceId } = req.body;
 
     const response = await axios.post("http://localhost:5000/item/addItem", {itemName, category, serialNumber, value, assignedTo, location, description, purchaseDate, workspaceId})
 
-    if (response.data.newItem) {
+    if (response.data.success) {
         return res.json({ success: true })
     } else {
         return res.json({ success: false })
